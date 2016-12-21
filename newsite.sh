@@ -34,7 +34,7 @@ TLD="local"
 TESTFILE="${SITEPATH}/index.html"
 
 
-# 3 Make new directory and change owner
+# 3 Make new directory and change owner (so not owned by 'root')
 #======================================
 mkdir $SITEPATH
 chown $LOGGEDINUSER $SITEPATH
@@ -61,7 +61,7 @@ echo "</VirtualHost>" >> $VHOSTSFILE
 #=====================================
 echo "<!DOCTYPE html>\n<html>\n<head>\n<title>Test page</title>\n</head>\n" >> $TESTFILE
 echo "<body>\n<h1>TEST PAGE</h1>\n<p>Hooray - your site called ${SITE} is working!</p>\n</body>\n</html>" >> $TESTFILE
-chown $LOGGEDINUSER $TESTFILE
+chown $LOGGEDINUSER $TESTFILE # so owned by user running sudo rather than owned by 'root'
 
 
 # 7 Restart Apache
