@@ -27,7 +27,10 @@ SITEPATH="${DOCROOT}/${SITE}"
 # 2.3 Path to httpd-vhosts.conf
 VHOSTSFILE="/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf"
 
-# 2.4 Path to the test file that will be created
+# 2.4 TLD (edit this if you want a different TLD)
+TLD="local"
+
+# 2.5 Path to the test file that will be created
 TESTFILE="${SITEPATH}/index.html"
 
 
@@ -39,16 +42,16 @@ chown $LOGGEDINUSER $SITEPATH
 
 # 4 Add new entry in /etc/hosts and flush DNS cache
 #==================================================
-echo "127.0.0.1\t${SITE}.dev" >> /etc/hosts
+echo "127.0.0.1\t${SITE}.${TLD}" >> /etc/hosts
 dscacheutil -flushcache
 
 
 # 5 Add new virtual host to http-vhosts.conf
 #===========================================
 echo "\n<VirtualHost *:80>" >> $VHOSTSFILE
-echo "\tServerAdmin webmaster@${SITE}.dev" >> $VHOSTSFILE
+echo "\tServerAdmin webmaster@${SITE}.${TLD}" >> $VHOSTSFILE
 echo "\tDocumentRoot \"${SITEPATH}\"" >> $VHOSTSFILE
-echo "\tServerName ${SITE}.dev" >> $VHOSTSFILE
+echo "\tServerName ${SITE}.${TLD}" >> $VHOSTSFILE
 echo "\tErrorLog \"/Applications/MAMP/logs/${SITE}-error.log\"" >> $VHOSTSFILE
 echo "\tCustomLog \"/Applications/MAMP/logs/${SITE}-access.log\" common" >> $VHOSTSFILE
 echo "</VirtualHost>" >> $VHOSTSFILE
@@ -68,4 +71,4 @@ chown $LOGGEDINUSER $TESTFILE
 
 # 8 Prompt user to test
 #======================
-echo "To confirm that the new site is working open web browser and type ${SITE}.dev/ in address bar."
+echo "To confirm that the new site is working open web browser and type ${SITE}.${TLD}/ in address bar."
