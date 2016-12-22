@@ -54,7 +54,7 @@ echo "\tDocumentRoot \"${SITEPATH}\"" >> $VHOSTSFILE
 echo "\tServerName ${SITE}.${TLD}" >> $VHOSTSFILE
 echo "\tErrorLog \"/Applications/MAMP/logs/${SITE}-error.log\"" >> $VHOSTSFILE
 echo "\tCustomLog \"/Applications/MAMP/logs/${SITE}-access.log\" common" >> $VHOSTSFILE
-echo "</VirtualHost>" >> $VHOSTSFILE
+echo "</VirtualHost>\n" >> $VHOSTSFILE
 
 
 # 6 Create index.html file for testing
