@@ -1,8 +1,14 @@
 #------------------------------------------------------------------
 #
+# BASH script to automate setting up a new virtual host in MAMP
+# (please note that this script assumes a standard installation of MAMP)
+#
 # Adapted from https://github.com/alanauckland86/MAMP-newsite-setup-script-/blob/master/newsite.sh
 #
 # To run type: sudo sh newsite.sh
+#
+# Or make executable with: chmod a+x newsite.sh
+# then to run type: sudo ./newsite.sh
 #
 #------------------------------------------------------------------
 
@@ -54,7 +60,7 @@ echo "\tDocumentRoot \"${SITEPATH}\"" >> $VHOSTSFILE
 echo "\tServerName ${SITE}.${TLD}" >> $VHOSTSFILE
 echo "\tErrorLog \"/Applications/MAMP/logs/${SITE}-error.log\"" >> $VHOSTSFILE
 echo "\tCustomLog \"/Applications/MAMP/logs/${SITE}-access.log\" common" >> $VHOSTSFILE
-echo "</VirtualHost>\n" >> $VHOSTSFILE
+echo "</VirtualHost>" >> $VHOSTSFILE
 
 
 # 6 Create index.html file for testing
@@ -69,6 +75,14 @@ chown $LOGGEDINUSER $TESTFILE # so owned by user running sudo rather than owned 
 /Applications/MAMP/bin/apache2/bin/apachectl restart;
 
 
-# 8 Prompt user to test
+# 8 Prompt for and create database
+#================================
+read -p "Create MySQL database (y/n): " DB
+if [ $DB == "y" ] || [ $DB == "Y" ]
+	 then /Applications/MAMP/Library/bin/mysql -uroot -p -e 'create database '${SITE}
+fi
+
+
+# 9 Prompt user to test
 #======================
 echo "To confirm that the new site is working open web browser and type ${SITE}.${TLD}/ in address bar."
